@@ -3,19 +3,20 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:proyecto_final/ui/general/colors.dart';
 import 'package:proyecto_final/ui/pages/home_page.dart';
 import 'package:proyecto_final/ui/pages/packages_pages.dart';
+import 'package:proyecto_final/ui/pages/permision_page.dart';
 import 'package:proyecto_final/ui/pages/profile_page.dart';
 import 'package:proyecto_final/ui/pages/track_page.dart';
 import 'package:proyecto_final/utils/assets_data.dart';
 
 class InitPage extends StatefulWidget {
-  const InitPage({Key? key}) : super(key: key);
+
 
   @override
   State<InitPage> createState() => _InitPageState();
 }
 
 class _InitPageState extends State<InitPage> {
-  int indexPage = 0;
+  int indexPage = 0 ;
   List<Widget> _page = [
     HomePage(),
     TrackPage(),

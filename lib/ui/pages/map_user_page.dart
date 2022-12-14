@@ -91,7 +91,7 @@ class _MapUserPageState extends State<MapUserPage> {
                       color: kBrandPrimaryColor,
                       text: "Confirmar lugar de recojo",
                       onTap: () {
-                        Navigator.pop(context);
+                        Navigator.pop(context,);
                       },
                     ),
                     spacing20,

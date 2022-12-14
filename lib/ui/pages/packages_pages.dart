@@ -3,6 +3,7 @@ import 'package:proyecto_final/SPGlobal/shared_preference.dart';
 import 'package:proyecto_final/model/user_model.dart';
 import 'package:proyecto_final/model/user_register_map.dart';
 import 'package:proyecto_final/ui/pages/map_user_page.dart';
+import 'package:proyecto_final/ui/pages/permision_page.dart';
 import 'package:proyecto_final/ui/widgets/general_widget.dart';
 import 'package:proyecto_final/ui/widgets/item_textfield_search.dart';
 import 'package:proyecto_final/utils/mediaquery.dart';
@@ -25,20 +26,21 @@ class _PackagesPageState extends State<PackagesPage> {
   TextEditingController _controllerDelivery = TextEditingController();
 
 
-  //
-  // getDataShared() async {
-  //   SharedPreferences _prefs = await SharedPreferences.getInstance();
-  //   direction =_prefs.getString("pickup") ??"";
-  //   setState(() {
-  //
-  //   });
-  // }
+
+  getDataShared() async {
+    // SharedPreferences _prefs = await SharedPreferences.getInstance();
+    // _controllerpickup.text =_prefs.getString("pickup") ??"";
+    _controllerpickup.text = _spGlobal.pickup;
+    setState(() {
+
+    });
+  }
 
 
   @override
   Widget build(BuildContext context) {
 
-    _controllerpickup.text = _spGlobal.pickup;
+
 
 
 
@@ -88,6 +90,7 @@ class _PackagesPageState extends State<PackagesPage> {
                                 controller:  _controllerpickup,
                                 onTap: () {
                                   Navigator.push(context, MaterialPageRoute(builder: (context) => MapUserPage(),));
+                                  getDataShared();
 
                                   setState(() {
 

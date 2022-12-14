@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:proyecto_final/SPGlobal/shared_preference.dart';
 import 'package:proyecto_final/ui/pages/init_page.dart';
 import 'package:proyecto_final/ui/pages/packages_pages.dart';
+import 'package:proyecto_final/ui/pages/session/sesion_page.dart';
 
 
 
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
       ),
       title: "DeliveryAPP",
       debugShowCheckedModeBanner: false,
-      home: InitPage(),
+      home: LoginPage(),
     );
   }
 }

@@ -13,6 +13,7 @@ class AssetData{
   static const String imageExit = "assets/images/exit.png";
   static const String imageGear = "assets/images/gear.png";
   static const String imageLocation = "assets/images/location.png";
+  static const String logo ="assets/images/entrega.png";
 
 
 }
