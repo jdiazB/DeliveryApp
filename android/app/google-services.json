@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "572874972348",
+    "project_id": "deliveryapp-a3239",
+    "storage_bucket": "deliveryapp-a3239.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:572874972348:android:dbc25235e12b8cdcf1c4b9",
+        "android_client_info": {
+          "package_name": "com.kaikaku.proyecto_final"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "572874972348-b54rian8t034sgtk0agrv9iv1t7im1nr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVPwk7Y0SGg-4-LHd2aONldoKiwae_N20"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "572874972348-b54rian8t034sgtk0agrv9iv1t7im1nr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
