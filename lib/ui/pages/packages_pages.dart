@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 import 'package:proyecto_final/SPGlobal/shared_preference.dart';
-import 'package:proyecto_final/model/user_model.dart';
 import 'package:proyecto_final/model/user_register_map.dart';
+import 'package:proyecto_final/providers/order_provider.dart';
+import 'package:proyecto_final/providers/register_provider.dart';
+import 'package:proyecto_final/service/my_service_firestore.dart';
+import 'package:proyecto_final/ui/general/text_general.dart';
 import 'package:proyecto_final/ui/pages/init_page.dart';
 import 'package:proyecto_final/ui/pages/map_user_page.dart';
-import 'package:proyecto_final/ui/pages/permision_page.dart';
 import 'package:proyecto_final/ui/widgets/general_widget.dart';
 import 'package:proyecto_final/ui/widgets/item_textfield_search.dart';
 import 'package:proyecto_final/utils/mediaquery.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:lottie/lottie.dart';
+import 'dart:io';
 
 import '../general/colors.dart';
 
@@ -26,6 +27,11 @@ class _PackagesPageState extends State<PackagesPage> {
   String typePackage = "caja pequeña";
   TextEditingController _controllerpickup = TextEditingController();
   TextEditingController _controllerDelivery = TextEditingController();
+
+  String categorytype = '';
+  List category = ['Documentos', 'Ropa', 'Celular', 'Comida'];
+
+  MyServiceFirestore orderService = MyServiceFirestore(collection: "orders");
 
   getDataShared() {
     // SharedPreferences _prefs = await SharedPreferences.getInstance();
@@ -65,16 +71,30 @@ class _PackagesPageState extends State<PackagesPage> {
                   Expanded(
                     child: ElevatedButton(
                         onPressed: () {
-                          bool value = true;
-                          if (value = false) {
+                          QuantityProvider registerProvider =
+                          Provider.of<QuantityProvider>(context, listen: false);
+                          UserRegisterMap model = UserRegisterMap(
+                            id: "1223",
+                            pickup: _controllerpickup.text,
+                            delivery: _controllerDelivery.text,
+                            category: categorytype,
+                            typecategory: typePackage,
+                            quantity: registerProvider.quantity.toString(),
+                            data: DateTime.now().toString().substring(0,16) ,
+                            price: registerProvider.price ,
+                            status: "enviado",
+                          );
+                          print(model.toJson());
+                          if (model != null) {
+                            orderService.addOrdens(model);
                             Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => InitPage(),
                                 ),
                                 (route) => false);
-
-
+                            showSnackBarSuccess(context, "La orden fue enviada");
+                            print(model);
                           }
                         },
                         style: ElevatedButton.styleFrom(
@@ -93,6 +113,11 @@ class _PackagesPageState extends State<PackagesPage> {
 
   @override
   Widget build(BuildContext context) {
+    QuantityProvider registerProvider =
+        Provider.of<QuantityProvider>(context, listen: false);
+
+    registerProvider.quantity = 1;
+
     return Scaffold(
       body: SafeArea(
           child: SingleChildScrollView(
@@ -198,6 +223,8 @@ class _PackagesPageState extends State<PackagesPage> {
                           onTap: () {
                             isSelected = true;
                             typePackage = "caja pequeña";
+                            registerProvider.price = 5;
+                            registerProvider.tempPrice = 5;
                             // print("caja pequeña");
                             setState(() {});
                           },
@@ -257,6 +284,8 @@ class _PackagesPageState extends State<PackagesPage> {
                             isSelected = false;
                             // print("caja grande");
                             typePackage = "caja grande";
+                            registerProvider.tempPrice = 7;
+                            registerProvider.price = 7;
                             setState(() {});
                           },
                           child: Container(
@@ -324,36 +353,168 @@ class _PackagesPageState extends State<PackagesPage> {
                     runSpacing: 2,
                     spacing: 10,
                     children: [
-                      Chip(
-                        label: Text("Documentos"),
+                      GestureDetector(
+                        onTap: () {
+                          categorytype = category[0];
+                          print(categorytype);
+                          setState(() {});
+                        },
+                        child: Chip(
+                          label: Text(
+                            "Documentos",
+                            style: TextStyle(
+                                color: categorytype == 'Documentos'
+                                    ? Colors.black
+                                    : Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
                       ),
-                      Chip(label: Text("Ropa")),
-                      Chip(label: Text("Electricos")),
-                      Chip(label: Text("Celular")),
-                      Chip(label: Text("Laptop")),
-                      Chip(label: Text("Comida")),
+                      GestureDetector(
+                        onTap: () {
+                          categorytype = category[1];
+                          print(categorytype);
+                          setState(() {});
+                        },
+                        child: Chip(
+                          label: Text(
+                            "Ropa",
+                            style: TextStyle(
+                                color: categorytype == 'Ropa'
+                                    ? Colors.black
+                                    : Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          categorytype = category[2];
+                          print(categorytype);
+                          setState(() {});
+                        },
+                        child: Chip(
+                          label: Text(
+                            "Celular",
+                            style: TextStyle(
+                                color: categorytype == 'Celular'
+                                    ? Colors.black
+                                    : Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          categorytype = category[3];
+                          print(categorytype);
+                          setState(() {});
+                        },
+                        child: Chip(
+                          label: Text(
+                            "Comida",
+                            style: TextStyle(
+                                color: categorytype == 'Comida'
+                                    ? Colors.black
+                                    : Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                   spacing30,
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Precio Total :",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w400),
-                        ),
-                        Text(
-                          "S/ 46.00",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                        )
-                      ],
-                    ),
+
+                  Consumer<QuantityProvider>(
+                    builder: (context, provider, _) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 8),
+                            decoration: BoxDecoration(
+                              color: kFontItem,
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                            child: Row(
+                              children: [
+                                InkWell(
+                                  onTap: provider.quantity > 1
+                                      ? () {
+                                          provider.removeQuantity();
+                                        }
+                                      : null,
+                                  child: Container(
+                                    padding: EdgeInsets.all(4),
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: provider.quantity > 1
+                                            ? Colors.black87
+                                            : Colors.black12),
+                                    child: Icon(Icons.remove,
+                                        size: 16,
+                                        color: provider.quantity > 1
+                                            ? Colors.white
+                                            : Colors.black87),
+                                  ),
+                                ),
+                                Container(
+                                  width: 40,
+                                  alignment: Alignment.center,
+                                  child: H5(
+                                    text: provider.quantity.toString(),
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    provider.addQuantity();
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.all(4),
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.black87),
+                                    child: Icon(
+                                      Icons.add,
+                                      size: 16,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          H2(
+                            text: "S/ ${provider.price.toStringAsFixed(2)}",
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                          )
+                        ],
+                      );
+                    },
                   ),
-                  spacing10,
+
+                  // Padding(
+                  //   padding: const EdgeInsets.all(8.0),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       Text(
+                  //         "Precio Total :",
+                  //         style: TextStyle(
+                  //             fontSize: 20, fontWeight: FontWeight.w400),
+                  //       ),
+                  //       Text(
+                  //         "S/ 46.00",
+                  //         style: TextStyle(
+                  //             fontSize: 20, fontWeight: FontWeight.bold),
+                  //       )
+                  //     ],
+                  //   ),
+                  // ),
+                  spacing20,
                   Center(
                     child: SizedBox(
                         height: ResponsiveUI(context).hp(6),

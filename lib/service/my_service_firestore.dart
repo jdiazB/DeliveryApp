@@ -1,6 +1,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:proyecto_final/model/user_model.dart';
+import 'package:proyecto_final/model/user_ordenmodel.dart';
 import 'package:proyecto_final/model/user_register_map.dart';
 
 class MyServiceFirestore{
@@ -11,11 +12,21 @@ class MyServiceFirestore{
  late final CollectionReference _collectionReference = FirebaseFirestore.instance.collection(collection);
 
 
- Future<String> addOrdens(UserRegisterMap model) async{
-   DocumentReference documentReference = await _collectionReference.add(model.toJson());
-   String id = documentReference.id;
-   return id;
+ addOrdens(UserRegisterMap model) async{
+   DocumentReference doc = await _collectionReference.add(model.toJson());
  }
+
+  Future<List<UserOrdenModel>> getOrders() async{
+    QuerySnapshot collection = await _collectionReference.get();
+    List<QueryDocumentSnapshot> docs = collection.docs;
+    List<UserOrdenModel> orders = [];
+    for(var item in docs){
+      UserOrdenModel orderMoldel = UserOrdenModel.fromJson(item.data() as Map<String, dynamic>);
+      orders.add(orderMoldel);
+      print(orderMoldel.toJson());
+    }
+    return orders;
+  }
 
  Future<String> addUser(UserModel userModel)async{
    DocumentReference documentoReference = await _collectionReference.add(userModel.toJson());

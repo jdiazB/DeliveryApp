@@ -1,7 +1,14 @@
+
+
+
+import 'package:proyecto_final/model/user_model.dart';
+
 class UserRegisterMap{
   String? id;
   String pickup;
   String delivery;
+  String typecategory;
+  String quantity;
   String category;
   String data;
   double price;
@@ -15,7 +22,10 @@ class UserRegisterMap{
     required this.category,
     required this.data,
     required this.price,
-    required this.status
+    required this.status,
+    required this.typecategory,
+    required this.quantity
+
 
 });
 
@@ -26,7 +36,11 @@ class UserRegisterMap{
     category: json["category"],
     data: json["data"],
     price: json["price"].toDouble(),
-    status: json["status"],);
+    status: json["status"],
+    typecategory: json["typecategory"],
+    quantity: json["quantity"]
+
+  );
 
   Map<String, dynamic> toJson()=>{
     "id":id,
@@ -36,6 +50,8 @@ class UserRegisterMap{
     "data":data,
     "price":price,
     "status":status,
+    "typecategory":typecategory,
+    "quantity":quantity
   };
 }
 

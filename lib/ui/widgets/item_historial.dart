@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto_final/model/user_register_map.dart';
 import 'package:proyecto_final/ui/general/colors.dart';
 import 'package:proyecto_final/ui/general/text_general.dart';
 import 'package:proyecto_final/ui/pages/modals/track_modal_page.dart';
 import 'package:proyecto_final/utils/mediaquery.dart';
 
 class ItemHistorial extends StatefulWidget {
-  const ItemHistorial({Key? key}) : super(key: key);
+
 
   @override
   State<ItemHistorial> createState() => _ItemHistorialState();

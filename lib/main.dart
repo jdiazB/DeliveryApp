@@ -4,7 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto_final/SPGlobal/shared_preference.dart';
 import 'package:proyecto_final/providers/order_provider.dart';
+import 'package:proyecto_final/providers/register_provider.dart';
 import 'package:proyecto_final/ui/pages/init_page.dart';
+import 'package:proyecto_final/ui/pages/session/sesion_page.dart';
 
 
 
@@ -26,6 +28,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (BuildContext context) => OrderProvider()),
+        ChangeNotifierProvider(create: (BuildContext context) => QuantityProvider()),
       ],
       child: MaterialApp(
         theme: ThemeData(
