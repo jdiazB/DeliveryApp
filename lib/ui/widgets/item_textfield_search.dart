@@ -8,12 +8,14 @@ class ItemTextfieldSearch extends StatelessWidget {
   TextEditingController controller;
   Function onTap;
 
+
   ItemTextfieldSearch({
     required this.hintText,
     required this.icon,
    this.color,
     required this.controller,
-    required this.onTap
+    required this.onTap,
+
 
 
 });
@@ -26,6 +28,7 @@ class ItemTextfieldSearch extends StatelessWidget {
         onTap();
       },
       decoration: InputDecoration(
+
         contentPadding: EdgeInsets.symmetric(horizontal: 12,vertical: 16),
         hintText: hintText,
         hintStyle: TextStyle(

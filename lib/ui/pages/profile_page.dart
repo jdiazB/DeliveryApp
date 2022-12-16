@@ -1,5 +1,9 @@
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:proyecto_final/ui/pages/direction_profile_page.dart';
+import 'package:proyecto_final/ui/pages/init_page.dart';
 import 'package:proyecto_final/ui/widgets/general_widget.dart';
 import 'package:proyecto_final/ui/widgets/item_listitle.dart';
 import 'package:proyecto_final/utils/assets_data.dart';
@@ -10,6 +14,16 @@ class ProfilePage extends StatefulWidget {
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
+
+final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ["email"]);
+
+Future<void> signOutGoogle() async{
+  await _googleSignIn.signOut();
+  await FirebaseAuth.instance.signOut();
+
+}
+
+
 
 class _ProfilePageState extends State<ProfilePage> {
   @override
@@ -157,7 +171,10 @@ class _ProfilePageState extends State<ProfilePage> {
               ItemListitle(
                   title: 'Salir',
                   image: AssetData.imageExit,
-                  onTap: () {
+                  onTap: ()  {
+                   signOutGoogle();
+
+
                     // Navigator.pop(context);
                     // Navigator.push(context, MaterialPageRoute(builder: (context) => DirectionProfilePage(),));
                   }),

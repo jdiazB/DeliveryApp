@@ -1,8 +1,28 @@
-class UserMap{
+class UserModel {
+  String? id;
+  int phone;
+  String fullName;
+  String email;
+  String direction;
+  String? image;
 
-  String pickup;
+  UserModel({
+    this.id,
+    required this.fullName,
+    required this.email,
+    required this.phone,
+    required this.direction,
+    this.image
 
-  UserMap({
-    required this.pickup
-});
+  });
+
+  Map<String, dynamic> toJson()=>{
+    "id": id ?? "",
+    "image":image,
+    "fullName": fullName,
+    "email": email,
+    "phone":phone.toInt(),
+    "direction":direction
+  };
+
 }

@@ -29,6 +29,7 @@ class UserRegisterMap{
     status: json["status"],);
 
   Map<String, dynamic> toJson()=>{
+    "id":id,
     "pickup": pickup,
     "delivery": delivery,
     "category": category,

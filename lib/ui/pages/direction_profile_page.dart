@@ -24,14 +24,7 @@ class DirectionProfilePage extends StatelessWidget {
              child: Column(
                children: [
                  Carddirection(),
-                 Carddirection(),
-                 Carddirection(),
-                 Carddirection(),
-                 Carddirection(),
-                 Carddirection(),
-                 Carddirection(),
-                 Carddirection(),
-                 Carddirection(),
+
                ],
              ),
            ),

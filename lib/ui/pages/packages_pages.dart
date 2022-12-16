@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lottie/lottie.dart';
 import 'package:proyecto_final/SPGlobal/shared_preference.dart';
 import 'package:proyecto_final/model/user_model.dart';
 import 'package:proyecto_final/model/user_register_map.dart';
+import 'package:proyecto_final/ui/pages/init_page.dart';
 import 'package:proyecto_final/ui/pages/map_user_page.dart';
 import 'package:proyecto_final/ui/pages/permision_page.dart';
 import 'package:proyecto_final/ui/widgets/general_widget.dart';
 import 'package:proyecto_final/ui/widgets/item_textfield_search.dart';
 import 'package:proyecto_final/utils/mediaquery.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:lottie/lottie.dart';
 
 import '../general/colors.dart';
 
 class PackagesPage extends StatefulWidget {
-
-
-
   @override
   State<PackagesPage> createState() => _PackagesPageState();
 }
@@ -22,28 +23,76 @@ class PackagesPage extends StatefulWidget {
 class _PackagesPageState extends State<PackagesPage> {
   final SPGlobal _spGlobal = SPGlobal();
   bool isSelected = true;
+  String typePackage = "caja pequeña";
   TextEditingController _controllerpickup = TextEditingController();
   TextEditingController _controllerDelivery = TextEditingController();
 
-
-
-  getDataShared() async {
+  getDataShared() {
     // SharedPreferences _prefs = await SharedPreferences.getInstance();
     // _controllerpickup.text =_prefs.getString("pickup") ??"";
     _controllerpickup.text = _spGlobal.pickup;
-    setState(() {
-
-    });
+    _controllerDelivery.text = _spGlobal.delivery;
   }
 
+  showAlert(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+          contentPadding: EdgeInsets.all(4),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                child: Lottie.asset('assets/json/deliverydrone.json',
+                    fit: BoxFit.fill),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        style: OutlinedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8))),
+                        child: Text("Cancelar")),
+                  ),
+                  spacingWidth10,
+                  Expanded(
+                    child: ElevatedButton(
+                        onPressed: () {
+                          bool value = true;
+                          if (value = false) {
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => InitPage(),
+                                ),
+                                (route) => false);
+
+
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8))),
+                        child: Text("Confirmar")),
+                  )
+                ],
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-
-
-
-
-
     return Scaffold(
       body: SafeArea(
           child: SingleChildScrollView(
@@ -87,14 +136,14 @@ class _PackagesPageState extends State<PackagesPage> {
                                 icon: Icon(Icons.location_on_outlined),
                                 hintText: "Lugar de recogida",
                                 color: Colors.black45,
-                                controller:  _controllerpickup,
-                                onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => MapUserPage(),));
+                                controller: _controllerpickup,
+                                onTap: () async {
+                                  await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => MapUserPage(),
+                                      ));
                                   getDataShared();
-
-                                  setState(() {
-
-                                  });
                                 }),
                             Divider(
                               color: Colors.grey.withOpacity(0.5),
@@ -104,8 +153,13 @@ class _PackagesPageState extends State<PackagesPage> {
                               hintText: "Lugar de Destino",
                               color: Colors.black45,
                               controller: _controllerDelivery,
-                              onTap: () {
-
+                              onTap: () async {
+                                await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => MapUserPage(),
+                                    ));
+                                getDataShared();
                               },
                             ),
                           ],
@@ -143,7 +197,8 @@ class _PackagesPageState extends State<PackagesPage> {
                         InkWell(
                           onTap: () {
                             isSelected = true;
-                            print("caja pequeña");
+                            typePackage = "caja pequeña";
+                            // print("caja pequeña");
                             setState(() {});
                           },
                           // onDoubleTap: () {
@@ -200,7 +255,8 @@ class _PackagesPageState extends State<PackagesPage> {
                         InkWell(
                           onTap: () {
                             isSelected = false;
-                            print("caja grande");
+                            // print("caja grande");
+                            typePackage = "caja grande";
                             setState(() {});
                           },
                           child: Container(
@@ -303,7 +359,15 @@ class _PackagesPageState extends State<PackagesPage> {
                         height: ResponsiveUI(context).hp(6),
                         width: ResponsiveUI(context).wp(80),
                         child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              if (_controllerDelivery != null &&
+                                  _controllerpickup != null &&
+                                  _controllerpickup.text.isNotEmpty &&
+                                  _controllerDelivery.text.isNotEmpty) {
+                                showAlert(context);
+                                print(typePackage);
+                              }
+                            },
                             style: ElevatedButton.styleFrom(
                                 primary: Color(0xffF89132),
                                 shape: RoundedRectangleBorder(
