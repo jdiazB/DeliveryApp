@@ -2,7 +2,7 @@ import 'package:proyecto_final/model/user_register_map.dart';
 
 class UserOrdenModel {
   String? id;
-  int phone;
+  String phone;
   String fullName;
   String email;
   String direction;
@@ -10,7 +10,7 @@ class UserOrdenModel {
   List<UserRegisterMap> user;
 
   UserOrdenModel(
-      {this.id,
+      {  this.id,
         required this.fullName,
         required this.email,
         required this.phone,
@@ -19,13 +19,13 @@ class UserOrdenModel {
         required this.image});
 
   factory UserOrdenModel.fromJson(Map<String, dynamic> json) => UserOrdenModel(
-    id: json["id"] ,
+    id: json["id"],
     fullName: json["fullName"],
     email: json["email"],
-    image: json["image"] ,
+    image: json["image"],
     phone: json["phone"],
     direction: json["direction"],
-    user: List<UserRegisterMap>.from(json["user"].map((e)=> UserRegisterMap.fromJson(e))),
+    user: List<UserRegisterMap>.from(json["user"].map((e)=> UserRegisterMap.fromJson(e))) ,
   );
 
   Map<String, dynamic> toJson() => {
@@ -33,7 +33,7 @@ class UserOrdenModel {
     "image": image ,
     "fullName": fullName,
     "email": email,
-    "phone": phone.toInt(),
+    "phone": phone,
     "direction": direction,
     "user":List<dynamic>.from(user.map((e) => e.toJson())),
   };

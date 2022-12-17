@@ -2,8 +2,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:proyecto_final/SPGlobal/shared_preference.dart';
 import 'package:proyecto_final/ui/pages/direction_profile_page.dart';
 import 'package:proyecto_final/ui/pages/init_page.dart';
+import 'package:proyecto_final/ui/pages/profile_page.dart';
 import 'package:proyecto_final/ui/widgets/general_widget.dart';
 import 'package:proyecto_final/ui/widgets/item_listitle.dart';
 import 'package:proyecto_final/utils/assets_data.dart';
@@ -17,6 +19,7 @@ class ProfilePage extends StatefulWidget {
 
 final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ["email"]);
 
+
 Future<void> signOutGoogle() async{
   await _googleSignIn.signOut();
   await FirebaseAuth.instance.signOut();
@@ -26,6 +29,9 @@ Future<void> signOutGoogle() async{
 
 
 class _ProfilePageState extends State<ProfilePage> {
+
+  final SPGlobal _spGlobal = SPGlobal();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,8 +77,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(25),
                             image: DecorationImage(
-                              image: NetworkImage(
-                                  'https://media-exp1.licdn.com/dms/image/C4E03AQH2NGuN_qeByg/profile-displayphoto-shrink_800_800/0/1661435123282?e=2147483647&v=beta&t=DASKRXSuSVahAZizUbiUQKLUAIcIIDrFjTwPcICZNzQ'),
+                              image: _spGlobal.image.isEmpty? NetworkImage(
+                                  'https://media-exp1.licdn.com/dms/image/C4E03AQH2NGuN_qeByg/profile-displayphoto-shrink_800_800/0/1661435123282?e=2147483647&v=beta&t=DASKRXSuSVahAZizUbiUQKLUAIcIIDrFjTwPcICZNzQ') : NetworkImage(_spGlobal.image),
                               fit: BoxFit.cover,
                             )),
                       ),
@@ -93,15 +99,15 @@ class _ProfilePageState extends State<ProfilePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Jorge Diaz",
+                        _spGlobal.fullName.isEmpty ? "Usuario" : _spGlobal.fullName,
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20),
                       ),
                       spacing10,
                       Text(
-                        "jorgeleoneldb@gmail.com",
+                        _spGlobal.email.isEmpty ? "Correo electronico" : _spGlobal.email,
                         style: TextStyle(
-                            color: Colors.black.withOpacity(0.5), fontSize: 16),
+                            color: Colors.black.withOpacity(0.5), fontSize: 12),
                       )
                     ],
                   ),

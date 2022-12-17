@@ -1,14 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:proyecto_final/SPGlobal/shared_preference.dart';
 import 'package:proyecto_final/ui/general/colors.dart';
 import 'package:proyecto_final/ui/general/text_general.dart';
 import 'package:proyecto_final/ui/widgets/general_widget.dart';
 import 'package:proyecto_final/ui/widgets/item_shipping.dart';
 import 'package:proyecto_final/utils/assets_data.dart';
 import 'package:proyecto_final/utils/mediaquery.dart';
+import 'package:proyecto_final/utils/searchdelegate.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final SPGlobal _spGlobal = SPGlobal();
+  String fullName="";
+  String urlImage="";
+  final TextEditingController _searchController = TextEditingController();
+
+  @override
+  initState(){
+  super.initState();
+  getShared();
+  }
+
+  getShared() async {
+    fullName= _spGlobal.fullName;
+    urlImage =_spGlobal.image;
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +53,9 @@ class HomePage extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 30,
-                        backgroundImage: NetworkImage(
-                            "https://media-exp1.licdn.com/dms/image/C4E03AQH2NGuN_qeByg/profile-displayphoto-shrink_800_800/0/1661435123282?e=2147483647&v=beta&t=DASKRXSuSVahAZizUbiUQKLUAIcIIDrFjTwPcICZNzQ"),
-                      ),
+                        backgroundImage: urlImage.isEmpty ?  NetworkImage(
+                            "https://media-exp1.licdn.com/dms/image/C4E03AQH2NGuN_qeByg/profile-displayphoto-shrink_800_800/0/1661435123282?e=2147483647&v=beta&t=DASKRXSuSVahAZizUbiUQKLUAIcIIDrFjTwPcICZNzQ"): NetworkImage(urlImage),
+                      )  ,
                       SizedBox(
                         width: 20,
                       ),
@@ -51,7 +74,7 @@ class HomePage extends StatelessWidget {
                               height: 5,
                             ),
                             Text(
-                              "Jorge Diaz",
+                              fullName,
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,
@@ -117,6 +140,10 @@ class HomePage extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(2.0),
                           child: TextField(
+                            controller: _searchController,
+                            onTap: () async{
+                             await  showSearch(context: context, delegate: searchdelegate());
+                            },
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(horizontal: 12,vertical: 16),
                                 hintText: "Ingresa el numero del paquete",

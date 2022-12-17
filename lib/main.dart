@@ -36,8 +36,18 @@ class MyApp extends StatelessWidget {
         ),
         title: "DeliveryAPP",
         debugShowCheckedModeBanner: false,
-        home: InitPage(),
+        home: PreInit(),
       ),
     );
   }
 }
+class PreInit extends StatelessWidget {
+ final SPGlobal _prefs = SPGlobal();
+
+  @override
+  Widget build(BuildContext context) {
+    return !_prefs.token.isNotEmpty ?  LoginPage(): InitPage() ;
+  }
+}
+
+

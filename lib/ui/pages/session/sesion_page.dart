@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:proyecto_final/SPGlobal/shared_preference.dart';
 import 'package:proyecto_final/model/user_model.dart';
 import 'package:proyecto_final/service/my_service_firestore.dart';
 import 'package:proyecto_final/ui/general/colors.dart';
@@ -24,8 +25,19 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ["email"]);
   MyServiceFirestore userService = MyServiceFirestore(collection: "login");
+  String fullName="";
+  String urlImage="";
+  String phone="";
 
   bool isLoading = false;
+  SPGlobal _spGlobal = SPGlobal();
+
+
+  saveShared(){
+    _spGlobal.fullName= fullName;
+    _spGlobal.image= urlImage;
+    _spGlobal.phone= phone;
+  }
 
   _login() async {
     try {
@@ -33,7 +45,8 @@ class _LoginPageState extends State<LoginPage> {
         UserCredential userCredential = await FirebaseAuth.instance
             .signInWithEmailAndPassword(
                 email: _emailController.text,
-                password: _passwordController.text);
+                password: _passwordController.text,
+        );
         if (userCredential.user != null) {
           Navigator.pushAndRemoveUntil(
               context,
@@ -65,14 +78,27 @@ class _LoginPageState extends State<LoginPage> {
       idToken: _googleSignInAuth.idToken,
       accessToken: _googleSignInAuth.accessToken,
     );
+    _spGlobal.token=credential.idToken!;
+
     UserCredential userCredential =
         await FirebaseAuth.instance.signInWithCredential(credential);
     if (userCredential.user != null) {
       UserModel userModel = UserModel(
           fullName: userCredential.user!.displayName!,
           email: userCredential.user!.email!,
-          phone: 0,
+          image: userCredential.user!.photoURL,
+          phone: userCredential.user!.phoneNumber==null ?   "" :userCredential.user!.phoneNumber!  ,
           direction: "");
+      //esto es para tomar los dos valores de una lista de string
+      List<String> name = userModel.fullName.split(" ");
+      fullName =name[0]+" "+name[1];
+      urlImage=userModel.image!;
+      phone = userModel.phone;
+      _spGlobal.email=userModel.email;
+      print(_spGlobal.email);
+      saveShared();
+      print(fullName);
+      print(urlImage);
       userService.exitUser(userCredential.user!.email!).then((value) {
         if(!value){
           //aqui se agrega en la base de datos
@@ -192,6 +218,7 @@ class _LoginPageState extends State<LoginPage> {
                           color: Color(0xfff84b2a),
                           onPressed: () {
                             _loginWithGoogle();
+
                           },
                         ),
                       ],

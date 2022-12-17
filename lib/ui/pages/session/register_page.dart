@@ -42,7 +42,7 @@ class _RegisterPageState extends State<RegisterPage> {
             fullName: _fullNameController.text,
             email: _emailController.text,
             direction: _directionController.text,
-            phone: _phoneController.hashCode,
+            phone: _phoneController.hashCode.toString(),
           );
           userService.addUser(userModel).then((value) {
             print(userModel);

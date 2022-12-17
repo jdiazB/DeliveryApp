@@ -59,12 +59,6 @@ class _TrackPageState extends State<TrackPage>  {
                           );
                         },
                       ),
-
-
-
-
-
-
                       // ItemHistorial(),
                     ],
                   ),

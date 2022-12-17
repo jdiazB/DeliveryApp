@@ -1,6 +1,6 @@
 class UserModel {
   String? id;
-  int phone;
+  String phone;
   String fullName;
   String email;
   String direction;
@@ -26,7 +26,7 @@ class UserModel {
         "image": image,
         "fullName": fullName,
         "email": email,
-        "phone": phone.toInt(),
+        "phone": phone,
         "direction": direction
       };
 }
