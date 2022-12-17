@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:proyecto_final/SPGlobal/shared_preference.dart';
 import 'package:proyecto_final/model/user_register_map.dart';
 import 'package:proyecto_final/providers/order_provider.dart';
 import 'package:proyecto_final/ui/general/colors.dart';
@@ -17,6 +18,7 @@ class TrackPage extends StatefulWidget {
 }
 
 class _TrackPageState extends State<TrackPage>  {
+
 
   @override
   void initState() {
@@ -54,12 +56,14 @@ class _TrackPageState extends State<TrackPage>  {
                             physics: const ScrollPhysics(),
                             itemCount: provider.orders.length,
                             itemBuilder: (context, index){
-                              return Text(provider.orders[index].toJson().toString());
+                              return ItemHistorial(userRegisterMap: provider.orders[index] );
+
+                                // Text(provider.orders[index].toJson().toString());
                             },
                           );
                         },
                       ),
-                      // ItemHistorial(),
+
                     ],
                   ),
                 ],

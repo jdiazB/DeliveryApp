@@ -42,7 +42,7 @@ class _RegisterPageState extends State<RegisterPage> {
             fullName: _fullNameController.text,
             email: _emailController.text,
             direction: _directionController.text,
-            phone: _phoneController.hashCode.toString(),
+            phone: _phoneController.text,
           );
           userService.addUser(userModel).then((value) {
             print(userModel);
@@ -94,6 +94,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   hintText: "Nombre completo",
                   icon: Icons.person,
                   controller: _fullNameController,
+                  inputType: TextInputType.name,
                 ),
                 spacing10,
                 spacing6,
@@ -102,6 +103,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   hintText: "Correo electrónico",
                   icon: Icons.email,
                   controller: _emailController,
+                  inputType: TextInputType.emailAddress,
                 ),
                 spacing10,
                 spacing6,
@@ -110,6 +112,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   hintText: "Celular",
                   icon: Icons.phone,
                   controller: _phoneController,
+                  inputType: TextInputType.phone,
                 ),
                 spacing10,
                 spacing6,
@@ -118,6 +121,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   hintText: "Direccion",
                   icon: Icons.house_outlined,
                   controller: _directionController,
+                  inputType: TextInputType.streetAddress,
                 ),
                 spacing10,
                 spacing6,
@@ -126,6 +130,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   label: "Ingresa tu constraseña",
                   hintText: 'contraseña',
                   controller: _passwordController,
+                  inputType: TextInputType.text,
                 ),
                 spacing20,
                 ItemElevatedButtom(

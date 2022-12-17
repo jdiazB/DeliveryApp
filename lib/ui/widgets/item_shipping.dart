@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:proyecto_final/model/user_register_map.dart';
 import 'package:proyecto_final/ui/general/colors.dart';
 import 'package:proyecto_final/ui/widgets/general_widget.dart';
 import 'package:proyecto_final/ui/widgets/item_statusdelivery.dart';
 import 'package:proyecto_final/utils/assets_data.dart';
 
 class ItemShipping extends StatelessWidget {
-  const ItemShipping({Key? key}) : super(key: key);
+  UserRegisterMap userRegisterMap;
+  ItemShipping({
+    required this.userRegisterMap
+});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +44,7 @@ class ItemShipping extends StatelessWidget {
                 ],
               ),
               SizedBox(width: 30,),
-             ItemStatusDelivery(),
+             // ItemStatusDelivery(),
             ],
           ),
           Row(

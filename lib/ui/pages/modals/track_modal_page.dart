@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto_final/model/user_register_map.dart';
 import 'package:proyecto_final/ui/general/colors.dart';
 import 'package:proyecto_final/ui/general/text_general.dart';
 import 'package:proyecto_final/ui/widgets/general_widget.dart';
 import 'package:proyecto_final/ui/widgets/item_elevatebuttom.dart';
-import 'package:proyecto_final/ui/widgets/item_listitle.dart';
+
 import 'package:proyecto_final/ui/widgets/item_statusdelivery.dart';
-import 'package:proyecto_final/utils/mediaquery.dart';
+
 
 class TrackModalPages extends StatefulWidget {
-  const TrackModalPages({Key? key}) : super(key: key);
+  UserRegisterMap userRegisterMap;
+  TrackModalPages({
+    required this.userRegisterMap
+});
 
   @override
   State<TrackModalPages> createState() => _TrackModalPagesState();
@@ -69,7 +73,7 @@ class _TrackModalPagesState extends State<TrackModalPages> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           H4(text: 'Fecha Recojo:'),
-                          H4(text: '22/05/2022',),
+                          H4(text: widget.userRegisterMap.data,),
                         ],),
                       spacing10,
                       Row(
@@ -83,7 +87,7 @@ class _TrackModalPagesState extends State<TrackModalPages> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           H4(text: 'Estado:'),
-                          ItemStatusDelivery(),
+                          ItemStatusDelivery(text: widget.userRegisterMap.status),
                         ],)
                     ],
                   ),
@@ -110,7 +114,7 @@ class _TrackModalPagesState extends State<TrackModalPages> {
                               children: [
                                 H6(text: 'Direccion de recojo',color: Colors.black45,),
                                 spacing6,
-                                H4(text: 'Direccion de envio',fontWeight: FontWeight.bold),
+                                H4(text: widget.userRegisterMap.pickup,fontWeight: FontWeight.bold),
                                 spacing10,
                                 Container(
                                   width: 280,
@@ -140,7 +144,7 @@ class _TrackModalPagesState extends State<TrackModalPages> {
                               children: [
                                 H6(text: 'Direccion de envio',color: Colors.black45,),
                                 spacing6,
-                                H4(text: 'Direccion de envio',fontWeight: FontWeight.bold),
+                                H4(text: widget.userRegisterMap.delivery,fontWeight: FontWeight.bold),
                                 spacing10,
                                 Container(
                                   width: 280,
@@ -163,7 +167,7 @@ class _TrackModalPagesState extends State<TrackModalPages> {
                             children: [
                               H6(text: 'Tipo de paquete',color: Colors.black45,),
                               spacing6,
-                              H4(text: 'Artefactos electronicos',fontWeight: FontWeight.bold),
+                              H4(text: widget.userRegisterMap.category,fontWeight: FontWeight.bold),
                               spacing10,
                               Container(
                                 width: 280,

@@ -13,6 +13,9 @@ class UserRegisterMap{
   String data;
   double price;
   String status;
+  String phone;
+  String fullName;
+  String email;
 
 
   UserRegisterMap({
@@ -24,7 +27,10 @@ class UserRegisterMap{
     required this.price,
     required this.status,
     required this.typecategory,
-    required this.quantity
+    required this.quantity,
+    required this.fullName,
+    required this.email,
+    required this.phone,
 
 
 });
@@ -38,12 +44,18 @@ class UserRegisterMap{
     price: json["price"].toDouble(),
     status: json["status"],
     typecategory: json["typecategory"],
-    quantity: json["quantity"]
+    quantity: json["quantity"],
+    fullName: json["fullName"],
+    email: json["email"],
+    phone: json["phone"],
 
   );
 
   Map<String, dynamic> toJson()=>{
     "id":id ,
+    "fullName": fullName,
+    "email": email,
+    "phone": phone,
     "pickup": pickup,
     "delivery": delivery,
     "category": category,

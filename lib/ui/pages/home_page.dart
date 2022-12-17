@@ -36,6 +36,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
 
+
     return Scaffold(
       backgroundColor: kBrandPrimaryColor,
         body: SafeArea(
@@ -267,18 +268,16 @@ class _HomePageState extends State<HomePage> {
                           spacing20,
                           Text("Envios recientes",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
                           spacing20,
-                          SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            physics: BouncingScrollPhysics(),
-                            child: Row(children: [
-                              ItemShipping(),
-                              ItemShipping(),
-                              ItemShipping(),
-                              ItemShipping(),
-                              ItemShipping(),
-                              ItemShipping(),
-                            ],),
-                          ),
+
+
+                          // SingleChildScrollView(
+                          //   scrollDirection: Axis.horizontal,
+                          //   physics: BouncingScrollPhysics(),
+                          //   child: Row(children: [
+                          //     ItemShipping(userRegisterMap: ),
+                          //
+                          //   ],),
+                          // ),
 
                         ],
                       ),

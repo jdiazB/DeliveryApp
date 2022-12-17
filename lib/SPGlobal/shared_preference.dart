@@ -65,4 +65,12 @@ class SPGlobal {
   String get email {
     return _prefs.getString("email") ?? "";
   }
+
+  set documentid(String value) {
+    _prefs.setString("documentid", value);
+  }
+
+  String get documentid {
+    return _prefs.getString("documentid") ?? "";
+  }
 }

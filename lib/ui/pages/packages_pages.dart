@@ -28,10 +28,20 @@ class _PackagesPageState extends State<PackagesPage> {
   TextEditingController _controllerpickup = TextEditingController();
   TextEditingController _controllerDelivery = TextEditingController();
 
-  String categorytype = '';
+  String categorytype = 'Comida';
   List category = ['Documentos', 'Ropa', 'Celular', 'Comida'];
 
   MyServiceFirestore orderService = MyServiceFirestore(collection: "orders");
+  String keyorder="";
+  // @override
+  // initState(){
+  // super.initState();
+  // keyorder=_spGlobal.documentid;
+  // print(keyorder+"initstate");
+  // setState(() {
+  //
+  // });
+  // }
 
   getDataShared() {
     // SharedPreferences _prefs = await SharedPreferences.getInstance();
@@ -71,18 +81,22 @@ class _PackagesPageState extends State<PackagesPage> {
                   Expanded(
                     child: ElevatedButton(
                         onPressed: () {
+                          keyorder=_spGlobal.documentid;
                           QuantityProvider registerProvider =
                           Provider.of<QuantityProvider>(context, listen: false);
                           UserRegisterMap model = UserRegisterMap(
-                            id: "1223",
+                            email: _spGlobal.email,
+                            fullName: _spGlobal.fullName,
+                            phone: _spGlobal.phone,
+                            id: keyorder,
                             pickup: _controllerpickup.text,
                             delivery: _controllerDelivery.text,
-                            category: categorytype,
+                            category: categorytype!,
                             typecategory: typePackage,
                             quantity: registerProvider.quantity.toString(),
                             data: DateTime.now().toString().substring(0,16) ,
                             price: registerProvider.price ,
-                            status: "enviado",
+                            status: "Enviado",
                           );
                           print(model.toJson());
                           if (model != null) {

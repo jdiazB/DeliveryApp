@@ -9,9 +9,9 @@ Color kFontItem = Colors.lightBlue.withOpacity(0.05);
 Color kFontButton = const Color(0xffF89132);
 Color klabel = const Color(0xfff7fff7);
 Map<String, Color> StatusColor = {
-  "Enviado": Color(0xff3E80FF),
-  "En proceso": Color(0xffEF476F),
-  "Entregado": Color(0xffFFC300),
+  "Enviado": Color(0xff38b000),
+  "En proceso": Color(0xffffb703),
+  "Entregado": Color(0xff293241),
 };
 
 

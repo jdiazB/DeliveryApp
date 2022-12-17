@@ -10,6 +10,7 @@ class TextFieldCustomWidget extends StatelessWidget {
   String hintText;
   IconData? icon;
   TextEditingController controller;
+  TextInputType inputType;
 
 
   TextFieldCustomWidget(
@@ -17,6 +18,7 @@ class TextFieldCustomWidget extends StatelessWidget {
         required this.label,
         required this.hintText,
          this.icon,
+        required this.inputType
        });
 
   @override
@@ -35,7 +37,7 @@ class TextFieldCustomWidget extends StatelessWidget {
         spacing10,
         TextFormField(
           controller: controller,
-          keyboardType: TextInputType.emailAddress,
+          keyboardType: inputType,
 
           style: TextStyle(
             color: klabel,

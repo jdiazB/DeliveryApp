@@ -1,11 +1,11 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:lottie/lottie.dart';
 import 'package:proyecto_final/SPGlobal/shared_preference.dart';
+import 'package:proyecto_final/ui/general/text_general.dart';
 import 'package:proyecto_final/ui/pages/direction_profile_page.dart';
-import 'package:proyecto_final/ui/pages/init_page.dart';
-import 'package:proyecto_final/ui/pages/profile_page.dart';
 import 'package:proyecto_final/ui/widgets/general_widget.dart';
 import 'package:proyecto_final/ui/widgets/item_listitle.dart';
 import 'package:proyecto_final/utils/assets_data.dart';
@@ -19,18 +19,61 @@ class ProfilePage extends StatefulWidget {
 
 final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ["email"]);
 
-
-Future<void> signOutGoogle() async{
+Future<void> signOutGoogle() async {
   await _googleSignIn.signOut();
   await FirebaseAuth.instance.signOut();
-
 }
 
-
-
 class _ProfilePageState extends State<ProfilePage> {
-
   final SPGlobal _spGlobal = SPGlobal();
+
+  showAlert(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+          contentPadding: EdgeInsets.all(4),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              H4(text: "Seguro de Salir de DeliveryAPP ?",color: Color(0xff2f3e46),fontWeight: FontWeight.w700, ),
+              Container(
+                child: Lottie.asset('assets/json/exituser.json', fit: BoxFit.fill),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        style: OutlinedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12))),
+                        child: Text("No",style: TextStyle(fontWeight: FontWeight.bold),))),
+
+                  spacingWidth10,
+                  Expanded(
+                    child: ElevatedButton(
+                        onPressed: () {
+                          SystemNavigator.pop();
+                        },
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                            )),
+                        child: Text("Si",style: TextStyle(fontWeight: FontWeight.bold),)),
+                  )
+                ],
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,8 +120,10 @@ class _ProfilePageState extends State<ProfilePage> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(25),
                             image: DecorationImage(
-                              image: _spGlobal.image.isEmpty? NetworkImage(
-                                  'https://media-exp1.licdn.com/dms/image/C4E03AQH2NGuN_qeByg/profile-displayphoto-shrink_800_800/0/1661435123282?e=2147483647&v=beta&t=DASKRXSuSVahAZizUbiUQKLUAIcIIDrFjTwPcICZNzQ') : NetworkImage(_spGlobal.image),
+                              image: _spGlobal.image.isEmpty
+                                  ? NetworkImage(
+                                      'https://media-exp1.licdn.com/dms/image/C4E03AQH2NGuN_qeByg/profile-displayphoto-shrink_800_800/0/1661435123282?e=2147483647&v=beta&t=DASKRXSuSVahAZizUbiUQKLUAIcIIDrFjTwPcICZNzQ')
+                                  : NetworkImage(_spGlobal.image),
                               fit: BoxFit.cover,
                             )),
                       ),
@@ -99,13 +144,17 @@ class _ProfilePageState extends State<ProfilePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        _spGlobal.fullName.isEmpty ? "Usuario" : _spGlobal.fullName,
+                        _spGlobal.fullName.isEmpty
+                            ? "Usuario"
+                            : _spGlobal.fullName,
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20),
                       ),
                       spacing10,
                       Text(
-                        _spGlobal.email.isEmpty ? "Correo electronico" : _spGlobal.email,
+                        _spGlobal.email.isEmpty
+                            ? "Correo electronico"
+                            : _spGlobal.email,
                         style: TextStyle(
                             color: Colors.black.withOpacity(0.5), fontSize: 12),
                       )
@@ -177,10 +226,8 @@ class _ProfilePageState extends State<ProfilePage> {
               ItemListitle(
                   title: 'Salir',
                   image: AssetData.imageExit,
-                  onTap: ()  {
-                   signOutGoogle();
-
-
+                  onTap: () {
+                    showAlert(context);
                     // Navigator.pop(context);
                     // Navigator.push(context, MaterialPageRoute(builder: (context) => DirectionProfilePage(),));
                   }),
